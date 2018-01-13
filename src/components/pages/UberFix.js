@@ -11,7 +11,7 @@ import {
 
 } from 'antd-mobile'
 
-// Uber Fix 
+// Uber Fix It
 class UberFix extends Component {
 
 	constructor() {
