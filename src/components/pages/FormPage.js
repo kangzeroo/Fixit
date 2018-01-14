@@ -8,6 +8,7 @@ import PropTypes from 'prop-types'
 import Rx from 'rxjs'
 import Dropzone from 'react-dropzone'
 import moment from 'moment'
+import uuidv4 from 'uuid/v4'
 import { withRouter } from 'react-router-dom'
 import {
   ActivityIndicator,
@@ -18,6 +19,7 @@ import {
   List,
   Button,
 } from 'antd-mobile'
+import {uploadToFirebase} from '../../api/firebase/firebase_storage'
 
 
 class FormPage extends Component {
@@ -32,13 +34,16 @@ class FormPage extends Component {
       description: '',
       loading: false,
       error_messages: [],
+      list_stuffs: [],
+      submitted: false,
 		}
 	}
+
 
   uploadPhoto(acceptedFiles, rejectedFiles) {
 		console.log(acceptedFiles)
 		this.setState({
-			images: acceptedFiles,
+			images: acceptedFiles
 		})
   }
 
@@ -51,10 +56,27 @@ class FormPage extends Component {
     })
   }
 
+
+  submitRequest() {
+    const requestId = uuidv4()
+    console.log(requestId)
+    if (this.state.name == '' || this.state.email == '' || this.state.phone == '' || this.state.description == ''){
+      alert("Please fill in the blanks")
+    } else {
+      uploadToFirebase(this.state.images,requestId)
+      .then((results)=>{
+        console.log(results)
+        this.state.list_stuffs.push(results)
+        this.state.submitted = true
+        console.log(this.state.list_stuffs)
+      })
+    }
+  }
+
 	render() {
 		return (
 			<div id='FormPage' style={comStyles().container}>
-      <p style={{fontFamily: 'Bangers', fontSize: '8rem', fontWeight: 'bold', color: 'purple', margin: '8px', paddingTop: '10px'}}>UberFix</p>
+      <p style={{fontFamily: 'Bangers', fontSize: '8rem', fontWeight: 'bold', color: 'white', margin: '8px', paddingTop: '10px'}}>FiXiT</p>
           <img style={{height: '300px', width: '300px', padding: '50px'}}src='http://www.repairmadi.com/images/repair_icon.png'/>
           <div style={comStyles().entrance}>
             <List>
@@ -86,7 +108,7 @@ class FormPage extends Component {
                   id='email'
                   value={this.state.email}
                   onChange={(v) => this.setState({ email: v })}
-                  placeholder='Email'
+                  placeholder=' Email'
                   style={comStyles().inputtext} />
               </List.Item>
             </List>
@@ -114,7 +136,7 @@ class FormPage extends Component {
               </Dropzone>
             </List>
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-            <Button fullWidth type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
+            <Button onClick={()=>this.submitRequest()} fullWidth type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
           </div>
 			</div>
 		)
@@ -156,9 +178,8 @@ const comStyles = () => {
 		container: {
       display: 'flex',
       flexDirection: 'column',
-			justifyContent: 'center',
 			alignItems: 'center',
-			minHeight: '100vh',
+			minHeight: '80vh',
 			minWidth: '100vw',
 			background: 'linear-gradient(269deg, #0bacbd, #1a76c1)',
       backgroundSize: 'cover',
@@ -174,7 +195,7 @@ const comStyles = () => {
       fontSize: '3rem',
       margin: '25px auto',
       width: '100%',
-      height: '100px',
+      height: '50px',
       padding: '20px',
     },
     dragndrop: {
@@ -184,7 +205,7 @@ const comStyles = () => {
 			alignItems: 'center',
 			minHeight: '25vh',
 			minWidth: '25vw',
-			background: 'white',
+			background: '#e0ffff',
       backgroundSize: 'cover',
 			fontFamily: `'Lato', sans-serif`,
     },
@@ -195,7 +216,6 @@ const comStyles = () => {
       height: '100px',
       display: 'flex',
       flexDirection: 'column',
-			justifyContent: 'center',
 			alignItems: 'center',
     }
 	}

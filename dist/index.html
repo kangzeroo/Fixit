@@ -3,12 +3,25 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Renthero CC</title>
+    <title>Fixit</title>
 
     <!-- Allow Fullscreen Web App with HomeScreen icon on mobile device -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
+    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDVTYdkxRPadgrLP27y8rBS0H24Cy3wvbo",
+        authDomain: "fixit-c88a4.firebaseapp.com",
+        databaseURL: "https://fixit-c88a4.firebaseio.com",
+        projectId: "fixit-c88a4",
+        storageBucket: "",
+        messagingSenderId: "363914755085"
+      };
+      firebase.initializeApp(config);
+    </script>
     <!-- Web Manifest File for firebase cloud messaging -->
     <link rel="manifest" href="/manifest.json">
 
@@ -16,14 +29,6 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
 
-    <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh3Q0Z_1WFRpRrpNz-j1h81wp9EyuNuhg&libraries=places,geometry"></script>
-    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-
-    <!-- Facebook Login -->
-    <meta name="google-signin-scope" content="profile email">
-    <meta name="google-signin-client_id" content="615799552250-q5oghkpfhjmkomirmschejc8qc0rtrrc.apps.googleusercontent.com">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
   </head>
   <style>
     .pac-container {
