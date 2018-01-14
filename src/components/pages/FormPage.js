@@ -13,6 +13,8 @@ import {
   ActivityIndicator,
 	Card,
   InputItem,
+  Input,
+  TextArea,
   List,
   Button,
 } from 'antd-mobile'
@@ -26,6 +28,7 @@ class FormPage extends Component {
       name: '',
       email: '',
       phone: '',
+      images: [],
       description: '',
       loading: false,
       error_messages: [],
@@ -35,8 +38,7 @@ class FormPage extends Component {
   uploadPhoto(acceptedFiles, rejectedFiles) {
 		console.log(acceptedFiles)
 		this.setState({
-			acceptedFiles,
-			rejectedFiles,
+			images: acceptedFiles,
 		})
   }
 
@@ -52,7 +54,8 @@ class FormPage extends Component {
 	render() {
 		return (
 			<div id='FormPage' style={comStyles().container}>
-          <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '80px' }}>Form</div>
+      <p style={{fontFamily: 'Bangers', fontSize: '8rem', fontWeight: 'bold', color: 'purple', margin: '8px', paddingTop: '10px'}}>UberFix</p>
+          <img style={{height: '300px', width: '300px', padding: '50px'}}src='http://www.repairmadi.com/images/repair_icon.png'/>
           <div style={comStyles().entrance}>
             <List>
               <List.Item>
@@ -69,6 +72,7 @@ class FormPage extends Component {
               <List.Item>
                 <InputItem
                   id='phone'
+                  type='number'
                   value={this.state.phone}
                   onChange={(v) => this.setState({ phone: v })}
                   placeholder='Phone'
@@ -99,13 +103,13 @@ class FormPage extends Component {
             </List>
             <br/><br/>
             <List>
-              <Dropzone onDrop={(acceptedFiles, rejectedFiles) => this.uploadPhoto(acceptedFiles, rejectedFiles, 'cover_photo')} multiple={true}>
+              <Dropzone style={comStyles().dragndrop} onDrop={(acceptedFiles, rejectedFiles) => this.uploadPhoto(acceptedFiles, rejectedFiles, 'cover_photo')} multiple={true}>
                 {
-                  this.state.cover_photo
+                  this.state.images.length > 0
                   ?
-                  <Image key={this.state.cover_photo.name} src={this.state.cover_photo.preview} style={comStyles().uploadImagesQueue} />
+                  <div style= {{fontSize: '40px', color: 'grey' }}>{ this.state.images.length } Images</div>
                   :
-                  <div>Upload Images</div>
+                  <div style= {{fontSize: '40px', color: 'grey' }}>Drag and Drop</div>
                 }
               </Dropzone>
             </List>
@@ -172,6 +176,17 @@ const comStyles = () => {
       width: '100%',
       height: '100px',
       padding: '20px',
+    },
+    dragndrop: {
+      display: 'flex',
+      flexDirection: 'column',
+			justifyContent: 'center',
+			alignItems: 'center',
+			minHeight: '25vh',
+			minWidth: '25vw',
+			background: 'white',
+      backgroundSize: 'cover',
+			fontFamily: `'Lato', sans-serif`,
     },
     enter_button: {
       fontSize: '3rem',
