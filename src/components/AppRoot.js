@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Radium from 'radium'
 import PropTypes from 'prop-types'
 import Rx from 'rxjs'
+import firebase from 'firebase'
 import {
   Switch,
   Route,
@@ -20,6 +21,17 @@ import FormPage from './pages/FormPage'
 import UberFix from './pages/UberFix'
 
 class AppRoot extends Component {
+
+  componentWillMount() {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDVTYdkxRPadgrLP27y8rBS0H24Cy3wvbo",
+      authDomain: "fixit-c88a4.firebaseapp.com",
+      databaseURL: "https://fixit-c88a4.firebaseio.com",
+      projectId: "fixit-c88a4",
+      storageBucket: "gs://fixit-c88a4.appspot.com",
+      messagingSenderId: "363914755085"
+    })
+  }
 
 	render() {
     return (
