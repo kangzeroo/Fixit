@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Radium from 'radium'
 import PropTypes from 'prop-types'
 import Rx from 'rxjs'
+import Dropzone from 'react-dropzone'
 import moment from 'moment'
 import { withRouter } from 'react-router-dom'
 import {
@@ -22,12 +23,22 @@ class FormPage extends Component {
 	constructor() {
 		super()
 		this.state = {
+      name: '',
       email: '',
       phone: '',
+      description: '',
       loading: false,
       error_messages: [],
 		}
 	}
+
+  uploadPhoto(acceptedFiles, rejectedFiles) {
+		console.log(acceptedFiles)
+		this.setState({
+			acceptedFiles,
+			rejectedFiles,
+		})
+  }
 
   componentDidMount() {
     // exit keyboard on press enter
@@ -41,18 +52,20 @@ class FormPage extends Component {
 	render() {
 		return (
 			<div id='FormPage' style={comStyles().container}>
-          <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '20px' }}>Form</div>
+          <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '80px' }}>Form</div>
           <div style={comStyles().entrance}>
             <List>
               <List.Item>
                 <InputItem
-                  id='email'
-                  value={this.state.email}
-                  onChange={(v) => this.setState({ email: v })}
-                  placeholder='Email'
+                  id='name'
+                  value={this.state.name}
+                  onChange={(v) => this.setState({ name: v })}
+                  placeholder='Name'
                   style={comStyles().inputtext} />
               </List.Item>
-              <br /><br />
+            </List>
+            <br/><br/>
+            <List>
               <List.Item>
                 <InputItem
                   id='phone'
@@ -63,6 +76,40 @@ class FormPage extends Component {
               </List.Item>
             </List>
             <br/><br/>
+            <List>
+              <List.Item>
+                <InputItem
+                  id='email'
+                  value={this.state.email}
+                  onChange={(v) => this.setState({ email: v })}
+                  placeholder='Email'
+                  style={comStyles().inputtext} />
+              </List.Item>
+            </List>
+            <br/><br/>
+            <List>
+              <List.Item>
+                <InputItem
+                  id='description'
+                  value={this.state.description}
+                  onChange={(v) => this.setState({ description: v })}
+                  placeholder='Description'
+                  style={comStyles().inputtext} />
+              </List.Item>
+            </List>
+            <br/><br/>
+            <List>
+              <Dropzone onDrop={(acceptedFiles, rejectedFiles) => this.uploadPhoto(acceptedFiles, rejectedFiles, 'cover_photo')} multiple={true}>
+                {
+                  this.state.cover_photo
+                  ?
+                  <Image key={this.state.cover_photo.name} src={this.state.cover_photo.preview} style={comStyles().uploadImagesQueue} />
+                  :
+                  <div>Upload Images</div>
+                }
+              </Dropzone>
+            </List>
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <Button fullWidth type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
           </div>
 			</div>
@@ -115,6 +162,7 @@ const comStyles = () => {
 		},
     entrance: {
       display: 'flex',
+      margin: '200px',
       flexDirection: 'column',
       width: '80%',
     },

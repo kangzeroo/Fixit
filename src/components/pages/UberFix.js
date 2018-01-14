@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Radium from 'radium'
 import PropTypes from 'prop-types'
 import Rx from 'rxjs'
+import Dropzone from 'react-dropzone'
 import { withRouter } from 'react-router-dom'
 import {
 
@@ -20,6 +21,7 @@ class UberFix extends Component {
 			name: '',
 			email: '',
 			phone: '',
+			description: '',
 			loading: false,
 			error_messages: [],
 		}
@@ -29,7 +31,7 @@ class UberFix extends Component {
 		console.log(acceptedFiles)
 		this.setState({
 			acceptedFiles,
-			rejectedFiles
+			rejectedFiles,
 		})
 	}
 
@@ -44,45 +46,46 @@ class UberFix extends Component {
 
 	render() {
 		return (
-			<div id='FormPage' style={comStyles().container}>
+			<div id='UberFix' style={comStyles().container}>
 					<div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '20px' }}>Form</div>
 					<div style={comStyles().entrance}>
 						<List>
-							<List.Item>
-								<InputItem
-									id='name'
-									value={this.state.email}
-									onChange={(v) => this.setState({ name: v })}
-									placeholder='Name'
-									style={comStyles().inputtext} />
-							</List.Item>
+						<List.Item>
+							<InputItem
+								id='name'
+								value={this.state.name}
+								onChange={(v) => this.setState({ name: v })}
+								placeholder='Name'
+								style={comStyles().inputtext} />
+						</List.Item>
+						<br /><br />
+						<List.Item>
+							<InputItem
+								id='phone'
+								value={this.state.phone}
+								onChange={(v) => this.setState({ phone: v })}
+								placeholder='Phone'
+								style={comStyles().inputtext} />
+						</List.Item>
+						<br /><br />
+						<List.Item>
+							<InputItem
+								id='email'
+								value={this.state.email}
+								onChange={(v) => this.setState({ email: v })}
+								placeholder='Email'
+								style={comStyles().inputtext} />
+						</List.Item>
+						<br /><br />
+						<List.Item>
+							<InputItem
+								id='description'
+								value={this.state.description}
+								onChange={(v) => this.setState({ description: v })}
+								placeholder='Description'
+								style={comStyles().inputtext} />
+						</List.Item>
 							<br /><br />
-							<List.Item>
-								<InputItem
-									id='phone'
-									value={this.state.phone}
-									onChange={(v) => this.setState({ phone: v })}
-									placeholder='Phone'
-									style={comStyles().inputtext} />
-							</List.Item>
-							<br /><br />
-							<List.Item>
-								<InputItem
-									id='email'
-									value={this.state.phone}
-									onChange={(v) => this.setState({ email: v })}
-									placeholder='Email'
-									style={comStyles().inputtext} />
-							</List.Item>
-							<Dropzone onDrop={(acceptedFiles, rejectedFiles) => this.uploadPhoto(acceptedFiles, rejectedFiles, 'repair_photo')} style={comStyles().bannerDropzone} multiple={false}>
-                {
-                  this.state.repair_photo
-                  ?
-                  <Image key={this.state.repair_photo.name} src={this.state.repair_photo.preview} style={comStyles().uploadImagesQueue} />
-                  :
-                  <div>Repair Photo</div>
-                }
-              </Dropzone>
 						</List>
 						<br/><br/>
 						<Button fullWidth type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
