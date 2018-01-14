@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Radium from 'radium'
 import PropTypes from 'prop-types'
+import Dropzone from 'react-dropzone'
 import Rx from 'rxjs'
 import moment from 'moment'
 import { withRouter } from 'react-router-dom'
@@ -40,8 +41,11 @@ class FormPage extends Component {
 
 	render() {
 		return (
-			<div id='FormPage' style={comStyles().container}>
-          <div style={{ fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '20px' }}>Form</div>
+      <div style={comStyles().container}>
+      <p style={{fontFamily: 'Bangers', fontSize: '8rem', fontWeight: 'bold', color: 'purple', margin: '8px', paddingTop: '10px'}}>UberFix</p>
+	      <div id='FormPage' style={comStyles().container}>
+          <img style={{height: '300px', width: '300px', padding: '50px'}}src='http://www.pngmart.com/files/1/Tools-PNG-Transparent-Image.png'/>
+          <div style={{fontSize: '3.5rem', fontWeight: 'bold', color: 'white', margin: '20px'}}>Form</div>
           <div style={comStyles().entrance}>
             <List>
               <List.Item>
@@ -52,7 +56,7 @@ class FormPage extends Component {
                   placeholder='Email'
                   style={comStyles().inputtext} />
               </List.Item>
-              <br /><br />
+              <br/><br/>
               <List.Item>
                 <InputItem
                   id='phone'
@@ -63,9 +67,10 @@ class FormPage extends Component {
               </List.Item>
             </List>
             <br/><br/>
-            <Button fullWidth type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
+            <Button type='primary' inline size='large' style={comStyles().enter_button}>Enter</Button>
           </div>
-			</div>
+			  </div>
+      </div>
 		)
   }
 }
@@ -105,7 +110,6 @@ const comStyles = () => {
 		container: {
       display: 'flex',
       flexDirection: 'column',
-			justifyContent: 'center',
 			alignItems: 'center',
 			minHeight: '100vh',
 			minWidth: '100vw',
